@@ -25,6 +25,6 @@ public class Options
     [Option('R', "routingkey", Required = false, HelpText = "routingkey name")]
     public string? RoutingKey { get; set; }
 
-    [Option('O', "path", Required = false, HelpText = "path to outputfile")]
+    [Option('O', "path", Required = false, HelpText = "path to output folder")]
     public string? OutputPath { get; set; }
 }

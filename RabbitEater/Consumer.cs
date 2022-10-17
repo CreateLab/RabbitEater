@@ -43,6 +43,8 @@ public class Consumer : DefaultBasicConsumer
          message.AppendLine($"Consuming Message");
 
          message.AppendLine(string.Concat("Message received from the exchange ", exchange));
+         
+         message.AppendLine(string.Concat("DateTime ", DateTime.Now));
 
          message.AppendLine(string.Concat("Consumer tag: ", consumerTag));
 
@@ -54,7 +56,8 @@ public class Consumer : DefaultBasicConsumer
 
          if(_filePath != null)
          {
-             File.AppendAllText(_filePath, message.ToString());
+             var filePath = Path.Combine(_filePath, $"{exchange}_{routingKey}_{DateTime.Now.Ticks}.txt");
+             File.AppendAllText(filePath, message.ToString());
          }
          else
          {
