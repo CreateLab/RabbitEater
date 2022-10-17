@@ -27,11 +27,15 @@ public class Consumer : DefaultBasicConsumer
         
         if(_exchangeName != null && _exchangeName != exchange)
         {
+            Console.WriteLine($"Message received from wrong exchange {exchange} {routingKey}");
+            _channel.BasicAck(deliveryTag, false);
             return;
         }
         
         if(_routingKey != null && _routingKey != exchange)
         {
+            Console.WriteLine($"Message received with wrong routing key {exchange} {routingKey}");
+            _channel.BasicAck(deliveryTag, false);
             return;
         }
         var message = new StringBuilder(6);
@@ -50,13 +54,14 @@ public class Consumer : DefaultBasicConsumer
 
          if(_filePath != null)
          {
-             File.WriteAllText(_filePath, message.ToString());
+             File.AppendAllText(_filePath, message.ToString());
          }
          else
          {
              Console.WriteLine(message.ToString());
          }
-         
+
+         Console.WriteLine($"Done with message {exchange} {routingKey}");
         _channel.BasicAck(deliveryTag, false);
 
     }
